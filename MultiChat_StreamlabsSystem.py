@@ -1,15 +1,20 @@
+from __future__ import division
 import codecs
 import json
 import os.path
 import sys
 import time
 import webbrowser
+import threading
 import clr
 import System
 from System.Reflection import *
 
 clr.AddReference([asbly for asbly in System.AppDomain.CurrentDomain.GetAssemblies() if "AnkhBotR2" in str(asbly)][0])
+clr.AddReference("System.Windows.Forms")
+from System.Windows.Forms.MessageBox import Show
 import AnkhBotR2
+msgbox = lambda obj: Show(str(obj))
 
 sys.platform = "win32"
 sys.path.append(os.path.dirname(__file__))
@@ -56,7 +61,7 @@ class Settings(object):
 
 
 settings = Settings()
-proc = None
+proc = None # type: subprocess.Popen
 BASE_URL = "http://127.0.0.1:4835/"
 last_check = time.time()
 
@@ -67,6 +72,12 @@ def Init():
     path = settings.python.replace("%LOCALAPPDATA%", os.environ["LOCALAPPDATA"]).replace(
         "%USERPROFILE%", os.environ["USERPROFILE"]
     )
+    if not os.path.exists(path):
+        msgbox("No python installation found at {}".format(path))
+        print_server_message("{}: Unable to start the twitch daemon. Please ensure you've set up python 3.10 or 3.11, "
+                             "and have put the location into the script settings.".format(ScriptName))
+        return
+
     proc = subprocess.Popen(args=[path, "-m", "multichat_daemon"], cwd=os.path.abspath(os.path.dirname(__file__)))
 
     if settings.token and settings.refresh_token:
@@ -100,7 +111,11 @@ def Tick():
 
 
 def Unload():
-    Parent.PostRequest(BASE_URL + "shutdown", {}, {}, True)
+    global proc
+
+    if proc is not None:
+        Parent.PostRequest(BASE_URL + "shutdown", {}, {}, True)
+        proc = None
 
 
 def ReloadSettings(data):
