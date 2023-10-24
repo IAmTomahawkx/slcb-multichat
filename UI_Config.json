@@ -22,6 +22,14 @@
     "function": "button_generate_token",
     "group": ""
   },
+  "btn_view_readme": {
+    "type": "button",
+    "label": "Open README",
+    "tooltip": "Pressing this will open your web browser to the README page on github.com.",
+    "wsevent": "",
+    "function": "button_open_readme",
+    "group": ""
+  },
   "token": {
     "type": "textbox",
     "label": "Token",

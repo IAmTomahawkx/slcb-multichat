@@ -140,3 +140,6 @@ def print_server_message(msg):
 
 def button_generate_token():
     webbrowser.open(BASE_URL + "token")
+
+def button_open_readme():
+    webbrowser.open("https://github.com/IAmTomahawkx/slcb-multichat/blob/master/README.md")
