@@ -31,8 +31,7 @@ async def main() -> None:
     client = TwitchClient(queue)
     server = LocalWebServer(queue, client)
 
-    asyncio.create_task(server.start())
-    await client.start()  # blocking
+    await asyncio.wait((asyncio.create_task(client.start()), asyncio.create_task(server.start())), return_when=asyncio.FIRST_COMPLETED)
 
 
 asyncio.run(main())
