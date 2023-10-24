@@ -1,0 +1,39 @@
+{
+  "output_file": "settings.json",
+  "refresh_interval": {
+    "type": "numberbox",
+    "label": "Refresh Rate",
+    "value": 1,
+    "tooltip": "How often to check for messages, in milliseconds. Numbers smaller than 1000 second may affect performance.",
+    "group": ""
+  },
+  "python": {
+    "type": "textbox",
+    "label": "Python 3.10/3.11 location",
+    "value": "%LOCALAPPDATA%\\Programs\\Python\\Python311\\pythonw.exe",
+    "tooltip": "The location of your Python 3.10 or 3.11 install. DO NOT USE 3.12!",
+    "group": ""
+  },
+  "btn_generate_token": {
+    "type": "button",
+    "label": "Generate Token",
+    "tooltip": "Pressing this will open your web browser to generate a token to connect to twitch with.",
+    "wsevent": "",
+    "function": "button_generate_token",
+    "group": ""
+  },
+  "token": {
+    "type": "textbox",
+    "label": "Token",
+    "value": "",
+    "tooltip": "The Twitch token to use for connecting to chat. You shouldn't need to edit this directly, but you should always make sure to click away from this script and click back before editing anything. Otherwise the token may have updated and your change will remove it.",
+    "group": "tokens"
+  },
+  "refresh_token": {
+    "type": "textbox",
+    "label": "Refresh token",
+    "value": "",
+    "tooltip": "The Twitch refresh token to use to refresh when the token expires. You shouldn't need to edit this directly, but you should always make sure to click away from this script and click back before editing anything. Otherwise the token may have updated and your change will remove it.",
+    "group": "tokens"
+  }
+}
